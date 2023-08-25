@@ -27,7 +27,8 @@
         redirectUrl.searchParams.append("client_id", clientId);
         redirectUrl.searchParams.append("scope", accessScope);
         redirectUrl.searchParams.append("redirect_uri", window.location.href);
-        window.location.href = redirectUrl.toString();
+        alert(redirectUrl.toString())
+        // window.location.href = redirectUrl.toString();
       } else if (shop && code && clientId) {
         const curl = `curl -X POST https://${shop}/admin/oauth/access_token \
 -H "Content-Type: application/json" \

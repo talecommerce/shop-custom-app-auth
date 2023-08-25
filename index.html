@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopify OAuth Helper</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      pre {
+        background-color: #eee;
+        padding: 1em;
+        border-radius: 0.5em;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta robots="noindex, nofollow" />
+    <script>
+      //@ts-check
+      const query = new URLSearchParams(window.location.search);
+      const shop = query.get("shop");
+      const accessScope = query.get("access_scope");
+      const clientId = query.get("client_id");
+      const code = query.get("code");
+
+      if (shop && accessScope && clientId) {
+        const redirectUrl = new URL(`https://${shop}/admin/oauth/authorize`);
+        redirectUrl.searchParams.append("client_id", clientId);
+        redirectUrl.searchParams.append("scope", accessScope);
+        redirectUrl.searchParams.append("redirect_uri", window.location.href);
+        window.location.href = redirectUrl.toString();
+      } else if (shop && code && clientId) {
+        const curl = `curl -X POST https://${shop}/admin/oauth/access_token \
+-H "Content-Type: application/json" \
+-d '{
+  "code": "${code}",
+  "client_id": "${clientId}",
+  "client_secret": "__secret_here__"
+}'
+`;
+        const curlElement = document.createElement("pre");
+        curlElement.innerText = curl;
+        document.body.appendChild(curlElement);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Shopify OAuth Helper</h1>
+    <p>
+      This page is used to help with the Shopify OAuth flow. It will redirect
+      the user to the Shopify OAuth page with the correct parameters.
+    </p>
+    <p>
+      If the user is redirected back to this page with a <code>code</code> query
+      parameter, it will display the <code>curl</code> command to get the access
+      token.
+    </p>
+  </body>
+</html>

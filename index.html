@@ -41,6 +41,13 @@
         const curlElement = document.createElement("pre");
         curlElement.innerText = curl;
         document.body.appendChild(curlElement);
+      } else {
+        console.warn("Missing query parameters", {
+          shop,
+          accessScope,
+          clientId,
+          code,
+        })
       }
     </script>
   </head>

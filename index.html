@@ -44,9 +44,7 @@
   "client_secret": "__secret_here__"
 }'
 `;
-        const curlElement = document.createElement("pre");
-        curlElement.innerText = curl;
-        document.body.appendChild(curlElement);
+        console.warn("Paste this command to the terminal", curl)
       } else {
         console.warn("Missing query parameters", {
           shop,

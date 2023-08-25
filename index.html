@@ -26,6 +26,7 @@
         const url = new URL(`https://${shop}/admin/oauth/authorize`);
         const redirectUrl = new URL(window.location.href)
         redirectUrl.search = ""
+        redirectUrl.searchParams.append("client_id", clientId);
 
         url.searchParams.append("client_id", clientId);
         url.searchParams.append("scope", accessScope);
